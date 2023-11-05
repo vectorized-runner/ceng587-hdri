@@ -19,9 +19,9 @@ namespace HDRI
     // ReSharper disable once InconsistentNaming
     public static class HDRIGenerator
     {
-        public const int MinPixelValue = 0;
-        public const int MaxPixelValue = 255;
-        public const float SmoothnessFactor = 100.0f;
+        private const int MinPixelValue = 0;
+        private const int MaxPixelValue = 255;
+        private const float SmoothnessFactor = 100.0f;
 
         private static int[] GetSampleIndices(ref Random random, int pixelCount, int sampleCount)
         {
@@ -85,13 +85,21 @@ namespace HDRI
             return samples;
         }
 
-        public static float[] SolveDebevec(Random random, ImageInfo[] images)
+        public static GFunctions SolveDebevec(Random random, ImageInfo[] images)
+        {
+            return new GFunctions(
+                SolveDebevecForChannel(random, images, Channel.Red),
+                SolveDebevecForChannel(random, images, Channel.Green),
+                SolveDebevecForChannel(random, images, Channel.Blue));
+        }
+
+        private static float[] SolveDebevecForChannel(Random random, ImageInfo[] images, Channel channel)
         {
             var pixelCount = images[0].GetPixelCount();
             var imageCount = images.Length;
             var sampleCount = GetRequiredSampleCount(imageCount);
             var sampleIndices = GetSampleIndices(ref random, pixelCount, sampleCount);
-            var sampledPixels = GetSamples(images, sampleIndices, Channel.Green);
+            var sampledPixels = GetSamples(images, sampleIndices, channel);
             var aRowCount = sampleCount * imageCount + 255;
             var aColumnCount = 256 + sampleCount;
             var k = 0;
