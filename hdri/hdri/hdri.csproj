@@ -80,16 +80,16 @@
         <Reference Include="System.Xml"/>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Channel.cs" />
-        <Compile Include="Debug.cs" />
-        <Compile Include="GFunctions.cs" />
-        <Compile Include="GraphDrawer.cs" />
-        <Compile Include="HDRIGenerator.cs" />
-        <Compile Include="ImageReader.cs" />
-        <Compile Include="Program.cs"/>
+        <Compile Include="Data\Channel.cs" />
+        <Compile Include="Data\GFunctions.cs" />
+        <Compile Include="Data\ImageInfo.cs" />
+        <Compile Include="Data\RunParameters.cs" />
+        <Compile Include="Logic\Debug.cs" />
+        <Compile Include="Logic\GraphDrawer.cs" />
+        <Compile Include="Logic\HDRIGenerator.cs" />
+        <Compile Include="Logic\ImageReader.cs" />
+        <Compile Include="Logic\Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
-        <Compile Include="ImageInfo.cs" />
-        <Compile Include="RunParameters.cs" />
     </ItemGroup>
     <ItemGroup>
       <None Include="packages.config" />
