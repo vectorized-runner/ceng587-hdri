@@ -21,7 +21,6 @@ namespace HDRI
     {
         private const int MinPixelValue = 0;
         private const int MaxPixelValue = 255;
-        private const float SmoothnessFactor = 100.0f;
 
         private static int[] GetSampleIndices(Random random, int pixelCount, int sampleCount)
         {
@@ -35,10 +34,12 @@ namespace HDRI
             return result;
         }
 
-        private static int GetRequiredSampleCount(int textureCount)
+        private static int GetRequiredSampleCount(int textureCount, float multiplier)
         {
             // In the Paper 50 pixels for (255 - 0) / (11 - 1), so I can multiply by 2
-            return 2 * ((MaxPixelValue - MinPixelValue) / (textureCount - 1));
+            var baseValue = 2 * ((MaxPixelValue - MinPixelValue) / (textureCount - 1));
+            var finalValue = (int)Math.Ceiling(baseValue * multiplier);
+            return finalValue;
         }
 
         private static int WeightFunction(int pixelValue)
@@ -85,20 +86,20 @@ namespace HDRI
             return samples;
         }
 
-        public static GFunctions SolveDebevec(Random random, ImageInfo[] images)
+        public static GFunctions SolveDebevec(RunParameters parameters, ImageInfo[] images)
         {
             return new GFunctions(
-                SolveDebevecForChannel(random, images, Channel.Red),
-                SolveDebevecForChannel(random, images, Channel.Green),
-                SolveDebevecForChannel(random, images, Channel.Blue));
+                SolveDebevecForChannel(parameters, images, Channel.Red),
+                SolveDebevecForChannel(parameters, images, Channel.Green),
+                SolveDebevecForChannel(parameters, images, Channel.Blue));
         }
 
-        private static float[] SolveDebevecForChannel(Random random, ImageInfo[] images, Channel channel)
+        private static float[] SolveDebevecForChannel(RunParameters parameters, ImageInfo[] images, Channel channel)
         {
             var pixelCount = images[0].GetPixelCount();
             var imageCount = images.Length;
-            var sampleCount = GetRequiredSampleCount(imageCount);
-            var sampleIndices = GetSampleIndices(random, pixelCount, sampleCount);
+            var sampleCount = GetRequiredSampleCount(imageCount, parameters.SampleCountMultiplier);
+            var sampleIndices = GetSampleIndices(parameters.Random, pixelCount, sampleCount);
             var sampledPixels = GetSamples(images, sampleIndices, channel);
             var aRowCount = sampleCount * imageCount + 255;
             var aColumnCount = 256 + sampleCount;
@@ -121,13 +122,14 @@ namespace HDRI
 
             A[k, (MinPixelValue + MaxPixelValue) / 2] = 1;
             k++;
+            var smoothnessFactor = parameters.SmoothnessFactor;
 
             for (int i = MinPixelValue + 1; i < MaxPixelValue; i++)
             {
                 var weight = WeightFunction(i);
-                A[k, i - 1] = weight * SmoothnessFactor;
-                A[k, i] = -2 * weight * SmoothnessFactor;
-                A[k, i + 1] = weight * SmoothnessFactor;
+                A[k, i - 1] = weight * smoothnessFactor;
+                A[k, i] = -2 * weight * smoothnessFactor;
+                A[k, i + 1] = weight * smoothnessFactor;
                 k++;
             }
 
