@@ -47,11 +47,9 @@ namespace HDRI
             var threshold = (MaxPixelValue + MinPixelValue) / 2;
             if (pixelValue <= threshold)
             {
-                // Z - ZMin
-                return pixelValue;
+                return pixelValue - MinPixelValue;
             }
 
-            // ZMax - Z
             return MaxPixelValue - pixelValue;
         }
 
