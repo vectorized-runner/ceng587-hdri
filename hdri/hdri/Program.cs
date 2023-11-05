@@ -10,7 +10,8 @@ namespace HDRI
             Debug.Log("Program Start");
 
             var random = new Random(Seed: 1);
-            var images = ImageReader.ExtractImageInfo("exposure sequences/Canon_EOS_550D");
+            var cameraFolder = "Canon_EOS_550D";
+            var images = ImageReader.ExtractImageInfo($"exposure sequences/{cameraFolder}");
             var runParameters = new RunParameters(random, sampleCountMultiplier: 1.0f, smoothnessFactor: 100.0f);
 
             var stopwatch = new Stopwatch();
@@ -21,7 +22,7 @@ namespace HDRI
             stopwatch.Stop();
             Debug.Log($"Algorithm took '{stopwatch.ElapsedMilliseconds}' ms");
 
-            GraphDrawer.Draw("First", "Z", "g(Z)", "FirstImg.png", gFunctions);
+            GraphDrawer.Draw(cameraFolder, "Z", "g(Z)", $"{cameraFolder}.png", gFunctions);
 
             foreach (var img in images)
             {
