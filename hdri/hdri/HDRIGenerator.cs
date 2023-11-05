@@ -55,7 +55,7 @@ namespace HDRI
             return MaxPixelValue - pixelValue;
         }
 
-        private static int GetChannel(Color color, Channel channel)
+        private static byte GetChannel(Color color, Channel channel)
         {
             return channel switch
             {
@@ -66,11 +66,11 @@ namespace HDRI
             };
         }
 
-        private static int[,] GetSamples(ImageInfo[] images, int[] sampleIndices, Channel channel)
+        private static byte[,] GetSamples(ImageInfo[] images, int[] sampleIndices, Channel channel)
         {
             var imageCount = images.Length;
             var sampleCount = sampleIndices.Length;
-            var samples = new int[imageCount, sampleCount];
+            var samples = new byte[imageCount, sampleCount];
 
             for (int imageIndex = 0; imageIndex < imageCount; imageIndex++)
             {
