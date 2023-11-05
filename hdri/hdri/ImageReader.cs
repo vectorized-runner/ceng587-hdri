@@ -7,7 +7,7 @@ namespace HDRI
 {
     public static class ImageReader
     {
-        public static ImageInfo[] GetAllImagesAtPath(string relativeFolderName)
+        public static ImageInfo[] ExtractImageInfo(string relativeFolderName)
         {
             var exePath = AppDomain.CurrentDomain.BaseDirectory;
             var absolutePath = Path.Combine(exePath, relativeFolderName);
