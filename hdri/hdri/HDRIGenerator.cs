@@ -67,18 +67,18 @@ namespace HDRI
 
         private static int[,] GetSamples(ImageInfo[] images, int[] sampleIndices, Channel channel)
         {
-            var textureCount = images.GetLength(0);
+            var imageCount = images.Length;
             var sampleCount = sampleIndices.Length;
-            var samples = new int[textureCount, sampleCount];
+            var samples = new int[imageCount, sampleCount];
 
-            for (int imageIndex = 0; imageIndex < textureCount; imageIndex++)
+            for (int imageIndex = 0; imageIndex < imageCount; imageIndex++)
             {
                 for (var sampleIndex = 0; sampleIndex < sampleIndices.Length; sampleIndex++)
                 {
                     var sample = sampleIndices[sampleIndex];
                     var color = images[imageIndex].GetPixel(sample);
-                    var pixel = GetChannel(color, channel);
-                    samples[imageIndex, sampleIndex] = pixel;
+                    var channelValue = GetChannel(color, channel);
+                    samples[imageIndex, sampleIndex] = channelValue;
                 }
             }
 

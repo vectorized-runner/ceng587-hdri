@@ -57,6 +57,7 @@
     <ItemGroup>
         <Compile Include="Channel.cs" />
         <Compile Include="Debug.cs" />
+        <Compile Include="GFunctions.cs" />
         <Compile Include="HDRIGenerator.cs" />
         <Compile Include="ImageReader.cs" />
         <Compile Include="Program.cs"/>
