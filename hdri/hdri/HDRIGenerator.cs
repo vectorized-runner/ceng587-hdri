@@ -37,7 +37,6 @@ namespace HDRI
 
         private static int GetRequiredSampleCount(int textureCount)
         {
-            return MaxPixelValue;
             // In the Paper 50 pixels for (255 - 0) / (11 - 1), so I can multiply by 2
             return 2 * ((MaxPixelValue - MinPixelValue) / (textureCount - 1));
         }
