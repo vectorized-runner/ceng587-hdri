@@ -87,12 +87,12 @@ namespace HDRI
         public static GFunctions SolveDebevec(RunParameters parameters, ImageInfo[] images)
         {
             return new GFunctions(
-                SolveDebevecForChannel(parameters, images, Channel.Red),
-                SolveDebevecForChannel(parameters, images, Channel.Green),
-                SolveDebevecForChannel(parameters, images, Channel.Blue));
+                SolveDebevec(parameters, images, Channel.Red),
+                SolveDebevec(parameters, images, Channel.Green),
+                SolveDebevec(parameters, images, Channel.Blue));
         }
 
-        private static double[] SolveDebevecForChannel(RunParameters parameters, ImageInfo[] images, Channel channel)
+        public static double[] SolveDebevec(RunParameters parameters, ImageInfo[] images, Channel channel)
         {
             var pixelCount = images[0].GetPixelCount();
             var imageCount = images.Length;
