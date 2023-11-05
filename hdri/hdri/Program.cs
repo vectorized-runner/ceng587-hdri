@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using ScottPlot;
 
 namespace HDRI
 {
@@ -22,7 +21,7 @@ namespace HDRI
             stopwatch.Stop();
             Debug.Log($"Algorithm took '{stopwatch.ElapsedMilliseconds}' ms");
 
-            Graph(gFunctions);
+            GraphDrawer.Draw("First", "Z", "g(Z)", "FirstImg.png", gFunctions);
 
             foreach (var img in images)
             {
@@ -30,30 +29,6 @@ namespace HDRI
             }
 
             Debug.Log("Program End");
-        }
-
-        private static void Graph(GFunctions gFunctions)
-        {
-            var plt = new Plot();
-            var pixelValues = new double[256];
-            for (int i = 0; i <= 255; i++)
-            {
-                pixelValues[i] = i;
-            }
-
-            var red = Color.FromARGB((uint)System.Drawing.Color.Red.ToArgb());
-            var green = Color.FromARGB((uint)System.Drawing.Color.Green.ToArgb());
-            var blue = Color.FromARGB((uint)System.Drawing.Color.Blue.ToArgb());
-
-            plt.Add.Scatter(pixelValues, gFunctions.Red, red);
-            plt.Add.Scatter(pixelValues, gFunctions.Green, green);
-            plt.Add.Scatter(pixelValues, gFunctions.Blue, blue);
-
-            plt.Title("Line Plot with Custom Color");
-            plt.XLabel("Pixel");
-            plt.YLabel("g(Z)");
-
-            plt.SavePng("xd.png", 600, 600);
         }
     }
 }
