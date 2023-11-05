@@ -85,9 +85,8 @@ namespace HDRI
             return samples;
         }
 
-        public static float[] SolveDebevec(Random random, ImageInfo[] images, float[] exposureTimes)
+        public static float[] SolveDebevec(Random random, ImageInfo[] images)
         {
-            Debug.Assert(images.Length == exposureTimes.Length);
             var pixelCount = images[0].GetPixelCount();
             var imageCount = images.Length;
             var sampleCount = GetRequiredSampleCount(imageCount);
@@ -100,14 +99,14 @@ namespace HDRI
             var b = Vector<float>.Build.Dense(new float[aRowCount]);
 
             // Data Fitting
-            for (int textureIndex = 0; textureIndex < imageCount; textureIndex++)
+            for (int imageIndex = 0; imageIndex < imageCount; imageIndex++)
             for (int sampleIndex = 0; sampleIndex < sampleCount; sampleIndex++)
             {
-                var pixel = sampledPixels[textureIndex, sampleIndex];
+                var pixel = sampledPixels[imageIndex, sampleIndex];
                 var weightedPixel = WeightFunction(pixel);
                 A[k, pixel] = weightedPixel;
                 A[k, sampleIndex + 256] = -weightedPixel;
-                var exposure = exposureTimes[textureIndex];
+                var exposure = images[imageIndex].ExposureTime;
                 b[k] = weightedPixel * exposure;
                 k++;
             }
