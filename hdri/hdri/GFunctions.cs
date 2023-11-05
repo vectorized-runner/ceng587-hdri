@@ -2,11 +2,11 @@ namespace HDRI
 {
     public readonly struct GFunctions
     {
-        public readonly float[] Red;
-        public readonly float[] Green;
-        public readonly float[] Blue;
+        public readonly double[] Red;
+        public readonly double[] Green;
+        public readonly double[] Blue;
 
-        public GFunctions(float[] red, float[] green, float[] blue)
+        public GFunctions(double[] red, double[] green, double[] blue)
         {
             Red = red;
             Green = green;

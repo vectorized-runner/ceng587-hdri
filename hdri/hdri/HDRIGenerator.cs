@@ -92,7 +92,7 @@ namespace HDRI
                 SolveDebevecForChannel(parameters, images, Channel.Blue));
         }
 
-        private static float[] SolveDebevecForChannel(RunParameters parameters, ImageInfo[] images, Channel channel)
+        private static double[] SolveDebevecForChannel(RunParameters parameters, ImageInfo[] images, Channel channel)
         {
             var pixelCount = images[0].GetPixelCount();
             var imageCount = images.Length;
@@ -132,7 +132,7 @@ namespace HDRI
             }
 
             var x = A.Solve(b);
-            var g = new float[256];
+            var g = new double[256];
             for (int i = 0; i <= 255; i++)
             {
                 g[i] = x[i];
