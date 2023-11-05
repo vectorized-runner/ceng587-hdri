@@ -20,29 +20,16 @@ namespace HDRI
             var imageFiles = Directory.GetFiles(absolutePath, "*.jpg");
             Debug.Log($"Found '{imageFiles.Length}' images: '{imageFiles}'");
 
-            foreach (var filePath in imageFiles)
+            var imageCount = imageFiles.Length;
+            var result = new ImageInfo[imageCount];
+
+            for (var index = 0; index < imageFiles.Length; index++)
             {
-                using var bitmap = new Bitmap(filePath);
-                var width = bitmap.Width;
-                var height = bitmap.Height;
-                var pixels = new Color[width * height];
-
-                for (int y = 0; y < height; y++)
-                {
-                    for (int x = 0; x < width; x++)
-                    {
-                        var color = bitmap.GetPixel(x, y);
-                        var pixelIndex = x + width * y;
-                        pixels[pixelIndex] = color;
-                    }
-                }
-
-                // Process the image using the 'bitmap' object
-                Console.WriteLine(
-                    $"Read image: {Path.GetFileName(filePath)}, Width: {bitmap.Width}, Height: {bitmap.Height}");
+                var filePath = imageFiles[index];
+                result[index] = new ImageInfo(new Bitmap(filePath), 0.0f);
             }
 
-            return new ImageInfo[0];
+            return result;
         }
     }
 }
