@@ -23,7 +23,7 @@ namespace HDRI
         private const int MaxPixelValue = 255;
         private const float SmoothnessFactor = 100.0f;
 
-        private static int[] GetSampleIndices(ref Random random, int pixelCount, int sampleCount)
+        private static int[] GetSampleIndices(Random random, int pixelCount, int sampleCount)
         {
             var result = new int[sampleCount];
 
@@ -98,7 +98,7 @@ namespace HDRI
             var pixelCount = images[0].GetPixelCount();
             var imageCount = images.Length;
             var sampleCount = GetRequiredSampleCount(imageCount);
-            var sampleIndices = GetSampleIndices(ref random, pixelCount, sampleCount);
+            var sampleIndices = GetSampleIndices(random, pixelCount, sampleCount);
             var sampledPixels = GetSamples(images, sampleIndices, channel);
             var aRowCount = sampleCount * imageCount + 255;
             var aColumnCount = 256 + sampleCount;
