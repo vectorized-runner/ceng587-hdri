@@ -8,16 +8,16 @@ namespace HDRI
         {
             Debug.Log("Program Start");
 
-            var random = new Random(1);
+            var random = new Random(Seed: 1);
             var imageInfos = ImageReader.ExtractImageInfo("exposure sequences/Canon_EOS_550D");
-            var gFunctions = HDRIGenerator.SolveDebevec(random, imageInfos);
+            var runParameters = new RunParameters(random, sampleCountMultiplier: 1.0f, smoothnessFactor: 100.0f);
+            var gFunctions = HDRIGenerator.SolveDebevec(runParameters, imageInfos);
 
-            // for (var index = 0; index < gFunctions.Length; index++)
-            // {
-            //     var value = gFunctions[index];
-            //     Debug.Log($"G#{index}: '{value}'");
-            // }
-
+            foreach (var img in imageInfos)
+            {
+                img.Dispose();
+            }
+            
             Debug.Log("Program End");
         }
     }

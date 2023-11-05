@@ -132,7 +132,6 @@ namespace HDRI
             }
 
             var x = A.Solve(b);
-
             var g = new float[256];
             for (int i = 0; i <= 255; i++)
             {
