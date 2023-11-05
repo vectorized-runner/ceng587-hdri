@@ -6,16 +6,19 @@ namespace HDRI
 {
     public static class ImageReader
     {
-        public static ImageInfo[] GetAllImagesAtPath()
+        public static ImageInfo[] GetAllImagesAtPath(string relativeFolderName)
         {
-            string folderPath = "path_to_your_image_folder";
+            var projectPath = AppDomain.CurrentDomain.BaseDirectory;
+            var absolutePath = Path.Combine(projectPath, relativeFolderName);
+            Debug.Log($"AbsolutePath for checking images: '{absolutePath}'");
 
-            if (!Directory.Exists(folderPath))
+            if (!Directory.Exists(absolutePath))
             {
-                throw new Exception($"Couldn't find the Directory {folderPath}");
+                throw new Exception($"Couldn't find the Directory {absolutePath}");
             }
 
-            var imageFiles = Directory.GetFiles(folderPath, "*.jpg");
+            var imageFiles = Directory.GetFiles(absolutePath, "*.jpg");
+            Debug.Log($"Found '{imageFiles.Length}' images: '{imageFiles}'");
 
             foreach (var filePath in imageFiles)
             {
@@ -38,6 +41,8 @@ namespace HDRI
                 Console.WriteLine(
                     $"Read image: {Path.GetFileName(filePath)}, Width: {bitmap.Width}, Height: {bitmap.Height}");
             }
+
+            return new ImageInfo[0];
         }
     }
 }
