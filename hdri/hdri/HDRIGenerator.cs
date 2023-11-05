@@ -118,10 +118,12 @@ namespace HDRI
                 k++;
             }
 
+            // Set Middle Value
             A[k, (MinPixelValue + MaxPixelValue) / 2] = 1;
             k++;
-            var smoothnessFactor = parameters.SmoothnessFactor;
 
+            // Smoothness
+            var smoothnessFactor = parameters.SmoothnessFactor;
             for (int i = MinPixelValue + 1; i < MaxPixelValue; i++)
             {
                 var weight = WeightFunction(i);
