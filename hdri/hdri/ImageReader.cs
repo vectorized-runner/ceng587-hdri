@@ -1,7 +1,6 @@
 using System;
 using System.Drawing;
 using System.IO;
-using System.Text;
 using ExifLib;
 
 namespace HDRI
@@ -28,9 +27,9 @@ namespace HDRI
             for (var index = 0; index < imageFiles.Length; index++)
             {
                 var filePath = imageFiles[index];
-                result[index] = new ImageInfo(new Bitmap(filePath), 0.0f);
-
-                Debug.Log($"ExpTime: {ReadExposureTimeFromJPG(filePath)}");
+                var bitmap = new Bitmap(filePath);
+                var exposureTime = ReadExposureTimeFromJPG(filePath);
+                result[index] = new ImageInfo(bitmap, exposureTime);
             }
 
             return result;
