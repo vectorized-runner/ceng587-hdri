@@ -15,7 +15,7 @@ namespace HDRI
 
         public static void Main(string[] args)
         {
-            Debug.Log("Program Start");
+            Console.WriteLine("Program Start");
 
             var folder = _folderNames[0];
 
@@ -25,11 +25,12 @@ namespace HDRI
                 var smoothness = 100.0f;
                 var sampleMultiplier = i;
                 var parameters = new RunParameters(random, sampleMultiplier, smoothness);
+                Console.WriteLine($"Running for '{sampleMultiplier}'");
                 Run(folder, parameters);
             }
 
             //  GraphDrawer.Draw(cameraFolder, "Z", "g(Z)", $"{cameraFolder}.png", gFunctions);
-            Debug.Log("Program End");
+            Console.WriteLine("Program End");
         }
 
         private static void Run(string folder, RunParameters parameters)
@@ -41,7 +42,7 @@ namespace HDRI
             var gFunctions = HDRIGenerator.SolveDebevec(parameters, images);
             stopwatch.Stop();
 
-            Debug.Log($"Running '{folder}' took {stopwatch.ElapsedMilliseconds} ms.");
+            Console.WriteLine($"Running '{folder}' took {stopwatch.ElapsedMilliseconds} ms.");
 
             foreach (var img in images)
             {

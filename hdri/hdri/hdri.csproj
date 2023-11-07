@@ -84,7 +84,6 @@
         <Compile Include="Data\GFunctions.cs" />
         <Compile Include="Data\ImageInfo.cs" />
         <Compile Include="Data\RunParameters.cs" />
-        <Compile Include="Logic\Debug.cs" />
         <Compile Include="Logic\GraphDrawer.cs" />
         <Compile Include="Logic\HDRIGenerator.cs" />
         <Compile Include="Logic\ImageReader.cs" />
