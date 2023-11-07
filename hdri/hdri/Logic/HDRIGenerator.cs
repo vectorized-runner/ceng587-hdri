@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using MathNet.Numerics.LinearAlgebra;
 
@@ -94,16 +96,29 @@ namespace HDRI
 
         public static double[] SolveDebevec(RunParameters parameters, ImageInfo[] images, Channel channel)
         {
+            var timings = new List<(long, string)>();
+            var stopwatch = new Stopwatch();
+            stopwatch.Restart();
+            
             var pixelCount = images[0].GetPixelCount();
             var imageCount = images.Length;
             var sampleCount = GetRequiredSampleCount(imageCount, parameters.SampleCountMultiplier);
             var sampleIndices = GetSampleIndices(parameters.Random, pixelCount, sampleCount);
             var sampledPixels = GetSamples(images, sampleIndices, channel);
+            
+            stopwatch.Stop();
+            timings.Add((stopwatch.ElapsedMilliseconds, "GetSamples"));
+            stopwatch.Restart();
+            
             var aRowCount = sampleCount * imageCount + 255;
             var aColumnCount = 256 + sampleCount;
             var k = 0;
             var A = Matrix<float>.Build.DenseOfArray(new float[aRowCount, aColumnCount]);
             var b = Vector<float>.Build.Dense(new float[aRowCount]);
+            
+            stopwatch.Stop();
+            timings.Add((stopwatch.ElapsedMilliseconds, "BuildMatrices"));
+            stopwatch.Restart();
 
             // Data Fitting
             for (int imageIndex = 0; imageIndex < imageCount; imageIndex++)
@@ -117,6 +132,10 @@ namespace HDRI
                 b[k] = weightedPixel * exposure;
                 k++;
             }
+            
+            stopwatch.Stop();
+            timings.Add((stopwatch.ElapsedMilliseconds, "DataFitting"));
+            stopwatch.Restart();
 
             // Set Middle Value
             A[k, (MinPixelValue + MaxPixelValue) / 2] = 1;
@@ -132,12 +151,25 @@ namespace HDRI
                 A[k, i + 1] = weight * smoothnessFactor;
                 k++;
             }
+            
+            stopwatch.Stop();
+            timings.Add((stopwatch.ElapsedMilliseconds, "Smoothness"));
+            stopwatch.Restart();
 
             var x = A.Solve(b);
             var g = new double[256];
             for (int i = 0; i <= 255; i++)
             {
                 g[i] = x[i];
+            }
+            
+            stopwatch.Stop();
+            timings.Add((stopwatch.ElapsedMilliseconds, "Solve"));
+            stopwatch.Restart();
+
+            foreach (var (ms, message) in timings)
+            {
+                Console.WriteLine($"Step '{message}' took '{ms}' ms");
             }
 
             return g;
