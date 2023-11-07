@@ -96,9 +96,7 @@ namespace HDRI
         {
             var pixelCount = images[0].GetPixelCount();
             var imageCount = images.Length;
-            Console.WriteLine($"ImageCount is: '{imageCount}'");
             var sampleCount = GetRequiredSampleCount(imageCount, parameters.SampleCountMultiplier);
-            Console.WriteLine($"SampleCount is: '{sampleCount}'");
             var sampleIndices = GetSampleIndices(parameters.Random, pixelCount, sampleCount);
             var sampledPixels = GetSamples(images, sampleIndices, channel);
             var aRowCount = sampleCount * imageCount + 255;

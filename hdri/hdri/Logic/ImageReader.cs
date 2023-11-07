@@ -11,7 +11,7 @@ namespace HDRI
         {
             var exePath = AppDomain.CurrentDomain.BaseDirectory;
             var absolutePath = Path.Combine(exePath, relativeFolderName);
-            Debug.Log($"AbsolutePath for checking images: '{absolutePath}'");
+            // Debug.Log($"AbsolutePath for checking images: '{absolutePath}'");
 
             if (!Directory.Exists(absolutePath))
             {
@@ -19,7 +19,7 @@ namespace HDRI
             }
 
             var imageFiles = Directory.GetFiles(absolutePath, "*.jpg");
-            Debug.Log($"Found '{imageFiles.Length}' images: '{imageFiles}'");
+            // Debug.Log($"Found '{imageFiles.Length}' images: '{imageFiles}'");
 
             var imageCount = imageFiles.Length;
             var result = new ImageInfo[imageCount];
