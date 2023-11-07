@@ -42,8 +42,8 @@
           <HintPath>..\packages\MathNet.Numerics.5.0.0\lib\net48\MathNet.Numerics.dll</HintPath>
         </Reference>
         <Reference Include="mscorlib" />
-        <Reference Include="ScottPlot, Version=5.0.9.0, Culture=neutral, processorArchitecture=MSIL">
-          <HintPath>..\packages\ScottPlot.5.0.9-beta\lib\net462\ScottPlot.dll</HintPath>
+        <Reference Include="ScottPlot, Version=4.1.68.0, Culture=neutral, PublicKeyToken=86698dc10387c39e, processorArchitecture=MSIL">
+          <HintPath>..\packages\ScottPlot.4.1.68\lib\net462\ScottPlot.dll</HintPath>
         </Reference>
         <Reference Include="SkiaSharp, Version=2.88.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
           <HintPath>..\packages\SkiaSharp.2.88.6\lib\net462\SkiaSharp.dll</HintPath>
