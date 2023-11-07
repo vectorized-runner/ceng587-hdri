@@ -19,14 +19,14 @@ namespace HDRI
 
             foreach (var folder in folderNames)
             {
-                RunAlgorithm(folder);
+                RunForCameraDifferences(folder);
             }
 
             //  GraphDrawer.Draw(cameraFolder, "Z", "g(Z)", $"{cameraFolder}.png", gFunctions);
             Debug.Log("Program End");
         }
 
-        private static void RunAlgorithm(string folder)
+        private static void RunForCameraDifferences(string folder)
         {
             var random = new Random(Seed: 1);
             var images = ImageReader.ExtractImageInfo($"exposure sequences/{folder}");

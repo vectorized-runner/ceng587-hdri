@@ -34,10 +34,10 @@ namespace HDRI
             return result;
         }
 
-        private static int GetRequiredSampleCount(int textureCount, float multiplier)
+        private static int GetRequiredSampleCount(int imageCount, float multiplier)
         {
             // In the Paper 50 pixels for (255 - 0) / (11 - 1), so I can multiply by 2
-            var baseValue = 2 * ((MaxPixelValue - MinPixelValue) / (textureCount - 1));
+            var baseValue = 2 * ((MaxPixelValue - MinPixelValue) / (imageCount - 1));
             var finalValue = (int)Math.Ceiling(baseValue * multiplier);
             return finalValue;
         }
@@ -96,7 +96,9 @@ namespace HDRI
         {
             var pixelCount = images[0].GetPixelCount();
             var imageCount = images.Length;
+            Console.WriteLine($"ImageCount is: '{imageCount}'");
             var sampleCount = GetRequiredSampleCount(imageCount, parameters.SampleCountMultiplier);
+            Console.WriteLine($"SampleCount is: '{sampleCount}'");
             var sampleIndices = GetSampleIndices(parameters.Random, pixelCount, sampleCount);
             var sampledPixels = GetSamples(images, sampleIndices, channel);
             var aRowCount = sampleCount * imageCount + 255;
